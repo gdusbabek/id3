@@ -1,0 +1,17 @@
+0.02
+9 Dec 2004
+  * finish unsynchronization.
+  * implement compression.
+  * create Id3 class to encapsulate everything. This pushes frames to a lower
+    level in the API and simplifies tag manipulation.
+8 Dec 2004
+  * implement unsynchronization (in process).
+  * create netbeans 4.0 project.
+
+0.01
+6 Dec 2004
+  * Initial version for ID3v2.3.0
+  * Pasted in license text to all source files.
+  * Supports reading and writing simple ID3 tags.
+    - No compression
+    - No encryption

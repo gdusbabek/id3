@@ -1,0 +1,1 @@
+I wrote this ID3 parsing library in 2004.

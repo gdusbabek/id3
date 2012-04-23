@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="compile" name="music">
+  <description>
+  </description>
+
+  <property name = "build_dir" value = "classes" />
+  <property name = "dist_dir" value = "jars" />
+  <property name = "src_dir" value = "src" />
+  <property name = "doc_dir" value = "docs" />
+
+  <target name = "clean">
+    <delete dir = "${dist_dir}" />
+    <mkdir dir = "${dist_dir}" />
+    <delete dir = "${build_dir}" />
+    <mkdir dir= "${build_dir}" />
+    <delete dir = "${doc_dir}" />
+    <mkdir dir= "${doc_dir}" />
+  </target>
+
+  <target name = "compile">
+    <javac destdir="${build_dir}" srcdir="${src_dir}" optimize="false" debug="true">
+      <include name = "com/dusbabek/lib/id3/**" />
+      <include name = "com/dusbabek/junk/**" />
+    </javac>
+  </target>
+
+  <target name="jar" depends="compile">
+      <jar  jarfile="${dist_dir}/java-id3.jar" basedir = "${build_dir}" />
+  </target>
+
+  <target name = "jar-source" depends = "compile">
+      <jar jarfile="${dist_dir}/java-id3-src.jar" basedir = "${src_dir}" />
+  </target>
+
+  <target name = "javadoc" depends="compile">
+      <javadoc
+          destdir="${doc_dir}"
+          author="false"
+          version="false"
+          use="false"
+          windowtitle="Java id3">
+
+          <packageset dir="${src_dir}" defaultexcludes="yes">
+              <include name="com/dusbabek/lib/id3/**" />
+          </packageset>
+
+          <doctitle><![CDATA[<h1>Java id3</h1>]]></doctitle>
+          <bottom><![CDATA[<i>Copyright &#169; 2004, 2005 Gary Dusbabek. All Rights Reserved.</i>]]></bottom>
+          <tag name="todo" scope="all" description="To do:" />
+          <tag name="assume" scope="all" description="Implmentational assumption:" />
+      </javadoc>
+  </target>
+
+  <target name = "bundle" depends="clean,jar-source,jar,javadoc">
+      <zip
+          zipfile="${dist_dir}/java-id3.zip"
+          basedir="."
+          excludes = "bak/**, classes/**, mp3/**, ${dist_dir}/**/*.zip, *.local">
+      </zip>
+  </target>
+
+  <target name = "run-gui" depends = "compile">
+    <java classname = "com.dusbabek.junk.TagFrame"
+        classpath = "${build_dir}/"
+    >
+    <jvmarg value="-Did3.verbose"/>
+    </java>
+  </target>
+
+</project>
